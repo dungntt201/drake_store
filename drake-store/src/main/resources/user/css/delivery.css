@@ -1,0 +1,1170 @@
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#header {
+    transition: all 0.5s;
+    z-index: 6;
+    background-color: rgb(255, 255, 255);
+    /* position: fixed;
+    top: 0;  */
+    /* width: 87%; */
+    margin: 0 auto;
+    width: 100%;
+    display: block;
+}
+
+.header1 {
+    display: flex;
+    width: 87%;
+    margin: 0 auto;
+}
+
+.logo {
+    width: 15%;
+    /* background-color: gray; */
+}
+
+.logo img {
+    margin-top: 5px;
+    width: 140px;
+    padding: 20px 0;
+}
+
+.main-menu {
+    z-index: 5;
+    width: 55%;
+
+}
+
+.main-menu ul.menu {
+    /* position: absolute; */
+    display: flex;
+    height: 100%;
+    margin-left: 100px;
+}
+
+.main-menu .li1 {
+    margin: 0;
+    position: relative;
+    padding: 25px 25px 20px 0;
+
+}
+
+.main-menu .li1 a {
+    font-size: 20px;
+}
+
+.menu {
+    margin-left: 30px;
+}
+
+.submenu {
+    /* z-index: 2; */
+    background-color: #fff;
+    /*  display: flex; */
+    width: 250px;
+    height: 0;
+    bottom: 100%;
+    overflow: hidden;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    top: 75px;
+    /* border: 1px solid black; */
+    position: absolute;
+    /* transform: scaleY(0); */
+    transition: all 0.3s;
+}
+
+.main-menu ul li a {
+    font-family: Josefin Sans, sans-serif;
+    color: black;
+    text-decoration: none;
+}
+
+@keyframes example {
+    0% {
+    }
+    25% {
+        opacity: 0.3;
+    }
+    50% {
+        padding-top: 0;
+        opacity: 0.5;
+    }
+    75% {
+        opacity: 0.7;
+    }
+    100% {
+    }
+}
+
+.submenu li {
+    /* transition: all 0.3s; */
+    border-radius: 5px;
+    padding: 15px 0 15px 15px;
+}
+
+.submenu1 a p {
+    margin: 0;
+    padding: 0;
+}
+
+.submenu1 {
+    margin: 15px;
+}
+
+.submenu1 li:hover {
+    background-color: black;
+    transition: all 0.3s;
+}
+
+.submenu1 li:hover a {
+    color: white;
+}
+
+/* The element to apply the animation to */
+.main-menu .menu .li1:hover {
+    animation-name: example;
+    animation-duration: 0.3s;
+}
+
+.main-menu .menu .li1:hover .submenu {
+    bottom: 20px;
+    height: 450px;
+    transition: all 0.3s;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.main-icon {
+    width: 30%;
+}
+
+.icon {
+    display: flex;
+}
+
+.overlay1 {
+    height: 0%;
+    width: 100%;
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.9);
+    overflow-x: hidden;
+    transition: 0.5s;
+}
+
+.overlay1-content {
+    position: relative;
+    top: 40%;
+    width: 100%;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.overlay1-content form input {
+    font-size: 18px;
+    padding: 0 20px;
+    width: 50%;
+    height: 50px;
+    margin: 0;
+
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.overlay1-content form button {
+    width: 5%;
+    height: 50px;
+    margin: 0 0 0 -5px;
+    padding: 0;
+    border: none;
+    background-color: rgb(46, 45, 45);
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    transition: all 0.3s;
+}
+
+.overlay1-content form button i {
+    font-size: 20px;
+    color: #fff;
+}
+
+.overlay1-content form button:hover {
+    background-color: #fff;
+    transition: all 0.3s;
+}
+
+.overlay1-content form button:hover p {
+    color: black;
+}
+
+.overlay1 .closebtn1 {
+    position: absolute;
+    top: 20px;
+    right: 45px;
+    font-size: 40px;
+    color: white;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+    .overlay1 .closebtn1 {
+        font-size: 40px;
+        top: 15px;
+        right: 35px;
+    }
+
+    .overlay1-content form input {
+        width: 80%;
+        font-size: 16px;
+        height: 40px;
+    }
+
+    .overlay1-content form button {
+        width: 15%;
+        height: 40px;
+
+    }
+}
+
+.search1 span {
+    font-size: 30px;
+    cursor: pointer;
+
+}
+
+.love {
+    position: relative;
+}
+
+.cart {
+    position: relative;
+}
+
+#libar {
+    display: none;
+}
+
+#libar .bar p i {
+    color: black;
+    text-decoration: none;
+    font-size: 30px;
+}
+
+.search1, .user, .love, .cart, .bar {
+    margin-top: 20px;
+    margin-right: 30px;
+}
+
+.user a, .cart a, .love a {
+    font-size: 30px;
+}
+
+.user a img {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.love1 p {
+    left: 60%;
+    top: -30%;
+    position: absolute;
+    width: auto;
+    font-size: 20px;
+    color: white;
+    background-color: black;
+    border-radius: 50%;
+    padding: 2px 10px;
+}
+
+.cart1 p {
+    left: 60%;
+    top: -30%;
+    position: absolute;
+    width: auto;
+    font-size: 20px;
+    color: white;
+    background-color: black;
+    border-radius: 50%;
+    padding: 2px 10px;
+}
+
+.money {
+    margin-top: 27px;
+    margin-right: 0;
+}
+
+.money p {
+    font-size: 25px;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+.sidenav {
+    height: 100%;
+    width: 250px;
+    position: fixed;
+    z-index: 10;
+    top: 0;
+    right: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    padding-top: 60px;
+    transform: translateX(100%);
+    transition: 0.5s;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+    text-decoration: none;
+    color: white;
+    cursor: pointer;
+}
+
+.sidenav .all-category {
+    margin: 0 18px;
+    padding: 0;
+}
+
+.sidenav .all-category p {
+    position: relative;
+    padding: 10px 10px;
+    font-weight: bolder;
+    border-radius: 10px;
+    margin: 0;
+}
+
+.sidenav .all-category p a {
+    padding: 7px 0;
+    font-size: 16px;
+    color: white;
+    text-decoration: none;
+}
+
+.sidenav .all-category p i {
+    color: white;
+    position: absolute;
+    right: 10px;
+    top: 15px;
+    font-size: 16px;
+}
+
+.sidenav .all-category p .fa-chevron-up {
+    display: none;
+}
+
+.sidenav .all-category .category2 {
+    margin-left: 20px;
+    margin-right: 20px;
+    display: none;
+}
+
+.sidenav .all-category p:hover {
+    background-color: white;
+    color: black;
+}
+
+.sidenav .all-category p:hover i {
+    color: black;
+}
+
+.sidenav .all-category p:hover a {
+    color: black;
+}
+
+.banner {
+    width: 100%;
+    margin: 0 auto 100px auto;
+    background: url("../Images/IMAGE2/banner.jpg");
+    /* background-attachment: fixed; */
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.banner .banner-content {
+    text-align: center;
+    padding: 120px 0;
+}
+
+.banner .banner-content p {
+    font-size: 30px;
+    font-weight: bolder;
+}
+
+.banner .banner-content a {
+    font-size: 17px;
+    text-decoration: none;
+    color: gray;
+}
+
+.banner .banner-content i {
+    font-size: 15px;
+    color: rgb(0, 0, 0);
+}
+
+.banner .banner-content span {
+    font-size: 17px;
+    margin-left: 5px;
+}
+
+
+.menu-footer {
+    border-bottom: 1px solid gray;
+    width: 100%;
+    background-color: black;
+}
+
+.menu-footer .menu-footer1 {
+    width: 87%;
+    margin: 0 auto;
+    display: flex;
+}
+
+.menu-footer .menu-footer1 .menuft {
+    width: 50%;
+    display: flex;
+    padding: 70px 0;
+}
+
+.menu-footer .menu-footer1 .menuft .mnft1 {
+    width: calc(100% / 2);
+    margin-left: 20px;
+}
+
+.menu-footer .menu-footer1 .menuft .mnft1 img {
+    width: 80%;
+}
+
+.menu-footer .menu-footer1 .menuft .mnft1 span, a {
+    color: rgb(206, 202, 202);
+    font-size: 17px;
+}
+
+.menu-footer .menu-footer1 .menuft .mnft1 i {
+    margin-right: 20px;
+    color: rgb(206, 202, 202);
+    font-size: 25px;
+}
+
+.menu-footer .menu-footer1 .menuft .mnft1 a {
+    text-decoration: none;
+    color: gray;
+}
+
+.menu-footer .menu-footer1 .menuft .mnft1 a:hover {
+    color: white;
+}
+
+.menu-footer .menu-footer1 .menuft .mnft1 #mnft {
+    font-size: 25px;
+    color: rgb(255, 255, 255);
+    position: relative;
+}
+
+.menu-footer .menu-footer1 .menuft .mnft1 #mnft::after {
+    content: "";
+    position: absolute;
+    height: 3px;
+    background-color: #fff;
+    width: 50px;
+    left: 0;
+    bottom: -20px;
+}
+
+.menu-footer .menu-footer1 .menuft .mnft1 #amn {
+    margin-top: 50px;
+}
+
+.menu-footer .menu-footer1 .menuft #mnft1 #amn1 {
+    margin-top: 20px;
+}
+
+.payment {
+    width: 100%;
+    background-color: black;
+}
+
+.payment .payment1 {
+    width: 87%;
+    margin: 0 auto;
+    padding: 50px 0;
+    display: flex;
+}
+
+.payment .payment1 .payment11 {
+    width: 45%;
+}
+
+.payment .payment1 .payment11 p {
+    margin-top: 10px;
+    color: rgb(206, 202, 202);
+}
+
+.payment .payment1 .payment11 p i {
+    margin-right: 5px;
+}
+
+.payment .payment1 .payment11 p a:hover {
+    color: white;
+}
+
+.payment .payment1 .socialnw {
+    width: 25%;
+}
+
+.payment .payment1 .socialnw i {
+    margin-top: 10px;
+    margin-right: 15px;
+    font-size: 25px;
+    color: rgb(206, 202, 202);
+}
+
+.payment .payment1 .socialnw a:hover i {
+    color: white;
+}
+
+.payment .payment1 .payment12 {
+    width: 30%;
+}
+
+.payment .payment1 .payment12 img {
+    -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+    filter: grayscale(100%);
+
+    top: 0;
+    transition: all 0.3s;
+}
+
+.payment .payment1 .payment12 a:hover img {
+    -webkit-filter: grayscale(0%); /* Safari 6.0 - 9.0 */
+    filter: grayscale(0%);
+    transition: all 0.3s;
+}
+
+#myBtn {
+    /* display: none; */
+    position: fixed;
+    bottom: -60px;
+    right: 30px;
+    z-index: 99;
+    font-size: 18px;
+    border: none;
+    outline: none;
+    background-color: rgb(0, 0, 0);
+    color: white;
+    cursor: pointer;
+    padding: 15px;
+    border-radius: 4px;
+    transition: all 0.3s;
+}
+
+#myBtn:hover {
+    background-color: #555;
+    transition: all 0.3s;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+.giao-hang {
+    width: 87%;
+    margin: 0 auto 100px auto;
+
+}
+
+.giao-hang .hd-title {
+    font-size: 30px;
+    font-weight: bolder;
+    position: relative;
+    margin-bottom: 30px;
+}
+
+.giao-hang .hd-title::after {
+    position: absolute;
+    content: "";
+    width: 100px;
+    height: 5px;
+    background-color: black;
+    left: 0;
+    bottom: -10px;
+}
+
+.giao-hang p {
+    font-size: 22px;
+    line-height: 40px;
+}
+
+.giao-hang p span {
+    color: red;
+    font-weight: bolder;
+}
+
+.giao-hang p .span1 {
+    color: black;
+    margin-left: 20px;
+}
+
+@media all and (max-width: 1335px) {
+    #header .header1 {
+        width: 92%;
+        margin: 0 auto;
+    }
+
+    #header .header1 .logo {
+        width: 20%;
+    }
+
+    #header .header1 .main-menu {
+        width: 55%
+    }
+
+    #header .header1 .main-icon {
+        width: 25%;
+    }
+
+    #header .main-icon .icon li {
+        width: calc(100% / 5);
+    }
+
+    .search1, .user, .love, .cart, .money {
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    #header .main-icon .icon {
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    #header .main-icon .icon li .search1 span {
+        font-size: 25px;
+    }
+
+    .user a, .cart a, .love a {
+        font-size: 25px;
+    }
+
+    .love1 p {
+        left: 20%;
+        top: -25%;
+        font-size: 15px;
+        padding: 3px 8px;
+    }
+
+    .cart1 p {
+        left: 20%;
+        top: -25%;
+        font-size: 15px;
+        padding: 3px 8px;
+    }
+
+    .money {
+        margin-top: 27px;
+    }
+
+    .money p {
+        text-align: right;
+        font-size: 20px;
+    }
+
+    .giao-hang {
+        width: 92%;
+    }
+
+    .menu-footer .menu-footer1 {
+        width: 92%;
+
+    }
+
+    .payment .payment1 {
+        width: 92%;
+    }
+
+    .payment .payment1 .payment11 {
+        width: 50%;
+    }
+
+    .payment .payment1 .socialnw {
+        width: 25%;
+    }
+
+    .payment .payment1 .payment12 {
+        width: 25%;
+    }
+
+
+}
+
+@media all and (max-width: 1025px) {
+    #header .header1 .main-menu {
+        display: none;
+
+    }
+
+    #header .main-icon #limoney {
+        display: none;
+    }
+
+    #header .main-icon #libar {
+        display: block;
+    }
+
+    #header .header1 .logo {
+        width: 70%;
+    }
+
+    #header .header1 .main-icon {
+        width: 30%;
+    }
+
+    #header .main-icon .icon li {
+        width: calc(100% / 5);
+    }
+
+    .search1, .user, .love, .cart, .bar {
+        width: 100%;
+        margin-top: 20px;
+        /* margin-left: 20px; */
+        margin-right: 0;
+    }
+
+    #header .main-icon .icon {
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    #header .main-icon .icon li .search1 span {
+        font-size: 25px;
+    }
+
+    .user a, .cart a, .love a {
+        font-size: 25px;
+    }
+
+    #header .main-icon .icon #libar .bar p {
+        margin-left: 15px;
+    }
+
+    .love1 p {
+        left: 25%;
+        top: -30%;
+        font-size: 15px;
+        border-radius: 50%;
+        padding: 3px 8px;
+    }
+
+    .cart1 p {
+        left: 25%;
+        top: -30%;
+        font-size: 15px;
+        border-radius: 50%;
+        padding: 3px 8px;
+    }
+
+    .banner .banner-content {
+        text-align: center;
+        padding: 90px 0;
+    }
+
+    .banner .banner-content p {
+
+        font-size: 30px;
+    }
+
+    .menu-footer .menu-footer1 {
+        display: block;
+    }
+
+    .menu-footer .menu-footer1 .menuft {
+        width: 100%;
+        padding: 0;
+    }
+
+    .menu-footer .menu-footer1 .menuft .mnft1 {
+        margin-top: 20px;
+    }
+
+    .menu-footer .menu-footer1 .menuft .mnft1 img {
+        width: 40%;
+    }
+
+    .payment .payment1 {
+        display: block;
+    }
+
+    .payment .payment1 .payment11 {
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .payment .payment1 .payment11 p {
+        text-align: center;
+    }
+
+    .payment .payment1 .payment12 {
+        display: flex;
+    }
+
+    .payment .payment1 .socialnw {
+        display: flex;
+        width: 50%;
+        margin: 0 auto;
+    }
+
+    .payment .payment1 .socialnw a {
+        width: 25%;
+    }
+
+    .payment .payment1 .socialnw i {
+        /* padding: 0 5px ; */
+        margin: 0;
+    }
+
+    .payment .payment1 .payment12 {
+        width: 50%;
+        margin: 20px auto;
+    }
+
+    .payment .payment1 .payment12 a {
+        width: 25%;
+    }
+
+    .payment .payment1 .payment12 img {
+        /* margin: 0 5px; */
+        padding: 0 5px;
+        width: 100%
+    }
+
+}
+
+@media all and (max-width: 769px) {
+    #header .header1 .logo {
+        width: 50%;
+    }
+
+    #header .header1 .logo img {
+        width: 40%;
+    }
+
+    #header .header1 .main-icon {
+        width: 50%;
+    }
+
+    #header .header1 .main-icon .icon {
+        width: 100%;
+        margin-right: 0;
+    }
+
+    #header .main-icon .icon li .bar p i {
+        font-size: 20px;
+        margin-top: 10px;
+    }
+
+    .love1 p {
+        left: 25%;
+        top: -30%;
+        font-size: 15px;
+        border-radius: 50%;
+        padding: 3px 8px;
+    }
+
+    .cart1 p {
+        left: 25%;
+        top: -30%;
+        font-size: 15px;
+        border-radius: 50%;
+        padding: 3px 8px;
+    }
+
+    .sidenav .sidemenu li a {
+        font-size: 15px;
+    }
+
+    .sidenav .sidemenu li .sidemenu1 li a p {
+        font-size: 12px;
+    }
+
+    .banner {
+        margin-bottom: 50px;
+    }
+
+    .banner .banner-content p {
+        font-size: 25px;
+    }
+
+    .giao-hang {
+        margin-bottom: 50px;
+    }
+
+    .giao-hang .hd-title {
+        font-size: 25px;
+    }
+
+    .giao-hang .hd-title::after {
+        height: 3px;
+    }
+
+    .giao-hang p {
+        font-size: 17px;
+        line-height: 30px;
+    }
+
+    .giao-hang p .span1 {
+        margin: 0px;
+    }
+
+    .menu-footer .menu-footer1 {
+        display: block;
+    }
+}
+
+@media all and (max-width: 531px) {
+    #header .header1 .logo img {
+        width: 47%;
+    }
+
+    #header .main-icon .icon li .search1 span {
+        font-size: 20px;
+    }
+
+    .user a, .cart a, .love a {
+        font-size: 20px;
+    }
+
+    #header .main-icon .icon li .bar p i {
+        font-size: 20px;
+        margin-top: 5px;
+    }
+
+    .love1 p {
+        left: 25%;
+        top: -30%;
+        font-size: 15px;
+        border-radius: 50%;
+        padding: 1px 7px;
+    }
+
+    .cart1 p {
+        left: 25%;
+        top: -30%;
+        font-size: 15px;
+        border-radius: 50%;
+        padding: 1px 7px;
+    }
+
+    .user a img {
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        margin-bottom: 8px;
+    }
+
+    .sidenav .sidemenu li a {
+        /* margin: 0; */
+        padding: 5px;
+    }
+
+    .sidenav .sidemenu li .sidemenu1 {
+        margin: 0;
+    }
+
+    .sidenav .sidemenu li #ii1 {
+        font-size: 15px;
+        margin-top: 0px;
+        right: 10%;
+    }
+
+    .sidenav .sidemenu li #ii2 {
+        font-size: 15px;
+        margin-top: 0px;
+        right: 10%;
+    }
+
+    .sidenav .sidemenu .closebtn {
+        padding: 0;
+        margin: 0;
+        right: 10px;
+    }
+
+    .banner {
+        margin-bottom: 50px;
+    }
+
+    .banner .banner-content {
+        padding: 60px;
+
+    }
+
+    .banner .banner-content a {
+        font-size: 15px;
+    }
+
+    .banner .banner-content i {
+        font-size: 10px;
+    }
+
+    .banner .banner-content span {
+        font-size: 15px;
+    }
+
+    .giao-hang .hd-title {
+        font-size: 20px;
+    }
+
+    .giao-hang p {
+        font-size: 16px;
+    }
+
+    .menu-footer .menu-footer1 .menuft {
+        display: block;
+        /* width: 100%; */
+    }
+
+    .menu-footer {
+        padding: 0px 0;
+        margin: 0;
+    }
+
+    .menu-footer .menu-footer1 .menuft .mnft1 {
+        width: 100%;
+        margin: 30px 0 0 0;
+        padding: 0;
+    }
+
+    .menu-footer .menu-footer1 .menuft .mnft1 #mnft {
+        font-size: 17px;
+    }
+
+    .menu-footer .menu-footer1 .menuft .mnft1 #mnft::after {
+        height: 2px;
+        bottom: -10px;
+    }
+
+    .menu-footer .menu-footer1 .menuft .mnft1 #amn {
+        margin-top: 20px;
+    }
+
+    .menu-footer .menu-footer1 .menuft .mnft1 #amn, #amn1 {
+        font-size: 15px;
+        margin-bottom: 0;
+        padding: 0;
+    }
+
+    .menu-footer .menu-footer1 .menuft .mnft1 i {
+        font-size: 20px;
+    }
+
+    .menu-footer .menu-footer1 .menuft .mnft1 a {
+        font-size: 15px;
+    }
+
+    .menu-footer .menu-footer1 .menuft .mnft1 span {
+        font-size: 15px;
+    }
+
+    .payment .payment1 p {
+        font-size: 15px;
+    }
+
+}
+
+@media all and (max-width: 450px) {
+    .love1 p {
+        left: 30%;
+        top: -35%;
+    }
+
+    .user a img {
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        margin-bottom: 10px;
+    }
+
+    .cart1 p {
+        left: 30%;
+        top: -35%;
+    }
+
+    .payment .payment1 .payment12 {
+        width: 70%;
+    }
+
+}
+
+@media all and (max-width: 321px) {
+    .love1 p {
+        left: 35%;
+        top: -40%;
+    }
+
+    .cart1 p {
+        top: -40%;
+        left: 35%
+    }
+
+    .menu-footer .menu-footer1 .menuft .mnft1 #mnft {
+        font-size: 17px;
+    }
+
+    .menu-footer .menu-footer1 .menuft .mnft1 #mnft::after {
+        height: 2px;
+        bottom: -10px;
+    }
+
+    .menu-footer .menu-footer1 .menuft .mnft1 #amn {
+        margin-top: 20px;
+    }
+
+    .menu-footer .menu-footer1 .menuft .mnft1 #amn, #amn1 {
+        font-size: 13px;
+        margin-bottom: 0;
+        padding: 0;
+    }
+
+    .menu-footer .menu-footer1 .menuft .mnft1 i {
+        font-size: 20px;
+    }
+
+    .menu-footer .menu-footer1 .menuft .mnft1 a {
+        font-size: 13px;
+    }
+
+    .menu-footer .menu-footer1 .menuft .mnft1 span {
+        font-size: 13px;
+    }
+
+    .payment .payment1 p {
+        font-size: 13px;
+    }
+
+    .payment .payment1 p a {
+        font-size: 13px;
+    }
+
+}

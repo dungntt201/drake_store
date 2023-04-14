@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.0.final using JasperReports Library version 6.19.0-646c68931cebf1a58bc65c4359d1f0ca223c5e94  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="demo" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4c06c4cb-2da0-4bb2-ae67-8415b1c6e52b">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<property name="net.sf.jasperreports.awt.ignore.missing.font" value="true"/>
+	<parameter name="created_by" class="java.lang.String"/>
+	<parameter name="code" class="java.lang.String"/>
+	<parameter name="created_date" class="java.lang.String"/>
+	<parameter name="customer_name" class="java.lang.String"/>
+	<parameter name="customer_phone" class="java.lang.String"/>
+	<parameter name="customer_email" class="java.lang.String"/>
+	<parameter name="customer_address" class="java.lang.String"/>
+	<parameter name="total" class="java.lang.String"/>
+	<parameter name="export_date" class="java.lang.String"/>
+	<field name="product_name" class="java.lang.String"/>
+	<field name="size" class="java.lang.String"/>
+	<field name="quantity" class="java.lang.Integer"/>
+	<field name="price_at_buy" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="284" splitType="Stretch">
+			<textField>
+				<reportElement x="455" y="40" width="92" height="20" uuid="a02398bb-cfc6-470d-939d-ae9802eeb322"/>
+				<textElement textAlignment="Left">
+					<font fontName="VN-Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{created_by}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="1" width="359" height="68" uuid="14491c37-38dd-49ad-8a51-976c0d49a19b"/>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="VN-Arial" size="16"/>
+					<paragraph lineSpacing="Proportional" lineSpacingSize="1.25"/>
+				</textElement>
+				<text><![CDATA[Dreams Sneakers
+ĐC: Liên Hiệp - Phúc Thọ - Hà Nội
+Hóa Đơn Bán Lẻ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="360" y="1" width="170" height="18" uuid="731e1613-d988-4226-b071-44c7fbee4a93"/>
+				<textElement textAlignment="Right">
+					<font fontName="VN-Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="530" y="1" width="44" height="18" uuid="1ca2db7f-0e12-481b-93c5-2604a5b67e67"/>
+				<textElement textAlignment="Left">
+					<font fontName="VN-Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" of " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="390" y="40" width="60" height="20" uuid="dbf38753-4719-4c35-bb81-f837a7edc8f2"/>
+				<textElement textAlignment="Right">
+					<font fontName="VN-Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Người xuất: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="39" y="100" width="528" height="18" uuid="6312cac4-46a6-458b-b660-7d7f7b88f23a"/>
+				<textElement>
+					<font fontName="VN-Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{code}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="100" width="39" height="18" uuid="5223055b-9a18-48bd-9d0e-a608f59142ee"/>
+				<textElement>
+					<font fontName="VN-Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Số HĐ:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="120" width="60" height="18" uuid="03a0203f-8620-4471-9e8f-e3e76964090f"/>
+				<textElement>
+					<font fontName="VN-Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ngày mua:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="140" width="90" height="18" uuid="c375f197-bf49-48fa-bee6-1b41141815ea"/>
+				<textElement>
+					<font fontName="VN-Arial" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Tên khách hàng:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="160" width="30" height="18" uuid="52d95081-04cc-4cbd-8201-3ddaca0eb65f"/>
+				<textElement>
+					<font fontName="VN-Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SĐT:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="180" width="39" height="18" uuid="0340e528-3a0a-49b3-8316-feaf5064b43b"/>
+				<textElement>
+					<font fontName="VN-Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Email:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="200" width="39" height="18" uuid="306b8fba-b0d1-40f5-8449-ae8182231bab"/>
+				<textElement>
+					<font fontName="VN-Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Địa chỉ:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="60" y="120" width="508" height="18" uuid="f84d2a20-d341-4c55-8751-5c504d93d28f"/>
+				<textElement>
+					<font fontName="VN-Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{created_date}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="90" y="140" width="477" height="18" uuid="4282f8dd-6126-46cd-b32b-63e072eee5ab"/>
+				<textElement>
+					<font fontName="VN-Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{customer_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="30" y="160" width="539" height="18" uuid="899028dc-3996-4ca0-af4f-a8c9bf837aaf"/>
+				<textElement>
+					<font fontName="VN-Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{customer_phone}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="39" y="180" width="530" height="18" uuid="2e26995e-625a-4b07-98f6-c43d6646490a"/>
+				<textFieldExpression><![CDATA[$P{customer_email}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="39" y="200" width="530" height="18" uuid="978944c7-0d51-465f-9743-1e7ec1e2ea2b"/>
+				<textElement>
+					<font fontName="VN-Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{customer_address}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="259" width="70" height="16" uuid="a102bb42-5176-4a74-8a36-655039c1527b"/>
+				<textElement>
+					<font fontName="VN-Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tên SP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="290" y="259" width="27" height="16" uuid="1c6d12e9-d2a6-4a11-a75f-a8cb5695f60b"/>
+				<textElement>
+					<font fontName="VN-Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Size]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="322" y="259" width="38" height="16" uuid="9ec473f1-a9e0-4f0f-bca7-ead2f9974189"/>
+				<textElement>
+					<font fontName="VN-Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="360" y="259" width="100" height="16" uuid="66bfd212-70bc-4797-88f1-69f1e12b93b6"/>
+				<textElement>
+					<font fontName="VN-Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Giá]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="474" y="259" width="91" height="16" uuid="280b181f-eb2f-4584-88b4-41a956512887"/>
+				<textElement>
+					<font fontName="VN-Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Thành tiền]]></text>
+			</staticText>
+			<line>
+				<reportElement x="-3" y="283" width="570" height="1" uuid="0dc2ee25-053d-4361-8b46-f60b1c51be38"/>
+			</line>
+			<staticText>
+				<reportElement x="410" y="225" width="56" height="19" uuid="91678323-7b09-4e20-bd5f-1c84c86e7e29"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="VN-Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tổng tiền:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="474" y="225" width="100" height="19" uuid="41e3fee0-fb4f-4689-bcbc-d2001b02f66f"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="VN-Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{total}+" VNĐ"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="455" y="19" width="119" height="20" uuid="5c360840-36ae-49f9-8f97-d4f932a863cd"/>
+				<textElement>
+					<font fontName="VN-Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" "+$P{export_date}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="360" y="19" width="90" height="20" uuid="b9377599-d501-475e-a7e7-8f3877728a39"/>
+				<textElement textAlignment="Right">
+					<font fontName="VN-Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ngày xuất:  ]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="33" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<textField>
+				<reportElement x="0" y="10" width="290" height="22" uuid="3307438f-cff4-4aa2-89c4-5412061818d2"/>
+				<textElement>
+					<font fontName="VN-Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{product_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="290" y="10" width="26" height="23" uuid="b28f1e5a-c6b5-4b3f-8d92-b6627b5f6f57"/>
+				<textElement>
+					<font fontName="VN-Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{size}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="360" y="11" width="100" height="22" uuid="358e61ed-4173-4785-9e9c-07653054cc90"/>
+				<textElement>
+					<font fontName="VN-Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{price_at_buy} + " VNĐ"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="29" width="570" height="1" isRemoveLineWhenBlank="true" uuid="1df36da0-35a1-4dd3-90a6-ba8a9ee7690d"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="474" y="11" width="91" height="22" uuid="565905de-f78a-4ae2-a38f-4a1233dbeda0"/>
+				<textElement>
+					<font fontName="VN-Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{price_at_buy}.multiply(new BigDecimal($F{quantity})) + " VNĐ"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="321" y="10" width="39" height="23" uuid="cbbd3370-de41-406d-8f8c-f09d6f762133"/>
+				<textElement>
+					<font fontName="VN-Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{quantity}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="30">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</columnFooter>
+</jasperReport>
