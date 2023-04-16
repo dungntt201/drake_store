@@ -18,6 +18,7 @@ import com.dev.drakestore.entities.SaleOrderProducts;
 import com.dev.drakestore.entities.User;
 import com.dev.drakestore.service.SaleOrderProductService;
 import com.dev.drakestore.service.SaleOrderService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -42,15 +43,14 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 @Controller
+@AllArgsConstructor
 public class ExportToPdfController extends BaseController {
 
-	@Autowired
-	private SaleOrderService saleOrderService;
+	private final SaleOrderService saleOrderService;
 
-	@Autowired
-	private SaleOrderProductService saleOrderProductService;
 
-	// @GetMapping("/saleorder/export/{saleorder_id}")
+	private final  SaleOrderProductService saleOrderProductService;
+
 
 	// hàm này dùng pdfwriter đang lỗi font
 	@RequestMapping(value = { "/saleorder/export/{saleorder_id}" }, method = RequestMethod.GET) // -> action
@@ -64,52 +64,12 @@ public class ExportToPdfController extends BaseController {
 		System.out.println(saleorder_id);
 
 		String headerKey = "Content-Disposition";
-		String headervalue = "attachment; filename=" + saleOrder.getCode() + ".pdf";
-		response.setHeader(headerKey, headervalue);
+		String headerValue = "attachment; filename=" + saleOrder.getCode() + ".pdf";
+		response.setHeader(headerKey, headerValue);
 
 		SaleOrderExport exporter = new SaleOrderExport(saleOrder, list);
 		exporter.export(response);
 	}
-
-	//
-//	@GetMapping(value = "/pdf/{saleorder_id}", produces = MediaType.APPLICATION_PDF_VALUE)
-//	public ResponseEntity<byte[]> downloadInvoice(@PathVariable("saleorder_id") int saleorder_id)
-//			throws JRException, IOException {
-//
-//		List<SaleOrderProducts> list = saleOrderProductService.findBySaleOrderId(saleorder_id);
-//
-//		JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(list, false);
-//		SaleOrder saleOrder = saleOrderService.getById(saleorder_id);
-//
-//		String pattern = "###,###.###";
-//		DecimalFormat decimalFormat = new DecimalFormat(pattern);
-//		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-//
-//		Map<String, Object> parameters = new HashMap<>();
-//		parameters.put("total", decimalFormat.format(saleOrder.getTotal()));
-//		parameters.put("date", formatter.format(saleOrder.getCreated_date()));
-//		parameters.put("code", saleOrder.getCode());
-//		parameters.put("customer_name", saleOrder.getCustomer_name());
-//		parameters.put("customer_phone", saleOrder.getCustomer_phone());
-//		parameters.put("customer_email", saleOrder.getCustomer_email());
-//		parameters.put("customer_address", saleOrder.getCustomer_address());
-//
-//		JasperReport compileReport = JasperCompileManager.compileReport(new FileInputStream("sale_order.jrxml"));
-//
-//		JasperPrint jasperPrint = JasperFillManager.fillReport(compileReport, parameters, beanCollectionDataSource);
-//
-//		// JasperExportManager.exportReportToPdfFile(jasperPrint,
-//		// System.currentTimeMillis() + ".pdf");
-//
-//		byte data[] = JasperExportManager.exportReportToPdf(jasperPrint);
-//
-//		System.err.println(data);
-//
-//		HttpHeaders headers = new HttpHeaders();
-//		headers.add("Content-Disposition", "inline; filename=tinh.pdf");
-//
-//		return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF).body(data);
-//	}
 
 	public byte[] generatePDFReport(int saleorder_id) throws JRException, IOException {
 		JasperReport jasperReport = JasperCompileManager
@@ -146,7 +106,6 @@ public class ExportToPdfController extends BaseController {
 	public ResponseEntity<byte[]> getPDFReport(@PathVariable("saleorder_id") int saleorder_id) {
 		try {
 			return new ResponseEntity<byte[]>(generatePDFReport(saleorder_id), HttpStatus.OK);
-//			return new ResponseEntity<byte[]>(HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<byte[]>(HttpStatus.INTERNAL_SERVER_ERROR);

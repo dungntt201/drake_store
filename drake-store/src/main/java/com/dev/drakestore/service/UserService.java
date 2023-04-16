@@ -224,23 +224,23 @@ public class UserService extends BaseService<User> implements Constants {
 	@Transactional
 	public void processOAuthPostLogin(CustomOAuth2User oauthUser) {
 		String username = oauthUser.getName();
-		String fullname = oauthUser.getFullname();
+		String fullName = oauthUser.getFullname();
 		String email = oauthUser.getEmail();
 		String clientName = oauthUser.getOauth2ClientName();
 		Calendar cal = Calendar.getInstance();
-		Date ngay = cal.getTime();
+		Date date = cal.getTime();
 
 		User existUser = loadUserByUsername(username);
 
 		Role role = roleService.loadRoleByName("USER");
 		if (existUser == null) {
 			User newUser = new User();
-			newUser.setFull_name(fullname);
+			newUser.setFull_name(fullName);
 			newUser.setUsername(username);
-			newUser.setCreated_date(ngay);
+			newUser.setCreated_date(date);
 			newUser.setEmail(email);
 			newUser.setProvider(clientName.toUpperCase());
-			if (clientName.toUpperCase().equals("FACEBOOK")) {
+			if ("FACEBOOK".equals(clientName.toUpperCase())) {
 				newUser.setAvatar("/users/avatars/facebook.jpg");
 			} else {
 				newUser.setAvatar("/users/avatars/google.jpg");
@@ -258,49 +258,13 @@ public class UserService extends BaseService<User> implements Constants {
 		return image == null || image.getOriginalFilename().isEmpty();
 	}
 
-//	//ajax
-//	@Transactional
-//	public User edit(USERdemo user) throws Exception {
-//		//lay thong tin trong db
-//		User userOnDb = super.getById(user.getId());
-//		
-//		Calendar cal = Calendar.getInstance();
-//		Date ngay = cal.getTime();
-//		
-//		userOnDb.setCreated_date(userOnDb.getCreated_date());
-//		userOnDb.setEmail(userOnDb.getEmail());
-//		userOnDb.setProvider(userOnDb.getProvider());
-//		userOnDb.setUsername(userOnDb.getUsername());
-//		userOnDb.setStatus(true);
-//		userOnDb.setUpdated_date(ngay);
-//		userOnDb.setFull_name(user.getFull_name());
-//		
-//		//kiểm tra xem có upload avatar k
-//		if(!isEmptyUploadFile(user.getFile())) {
-//			//xóa file trong folder
-//			new File("C:/Users/ASUS/eclipse-workspace/com.devpro.drakestore/Uploads/"+userOnDb.getAvatar()).delete();
-//			
-//			String path = "C:/Users/ASUS/eclipse-workspace/com.devpro.drakestore/Uploads/users/avatars/"
-//					+user.getFile().getOriginalFilename();
-//			user.getFile().transferTo(new File(path));
-//			userOnDb.setAvatar("/users/avatars/"+user.getFile().getOriginalFilename());
-//		}else {
-//			//sd lai avatar cũ
-//			userOnDb.setAvatar(userOnDb.getAvatar());
-//		}
-//
-//		//luu vao db
-//		return super.saveOrUpdate(userOnDb);
-//	}
-
 	// controller basic edit user
 	@Transactional
 	public User edit1(User user, MultipartFile userAvatar) throws Exception {
-		// lay thong tin trong db
 		User userOnDb = super.getById(user.getId());
 
 		Calendar cal = Calendar.getInstance();
-		Date ngay = cal.getTime();
+		Date date = cal.getTime();
 
 		user.setCreated_date(userOnDb.getCreated_date());
 		user.setEmail(userOnDb.getEmail());
@@ -310,7 +274,7 @@ public class UserService extends BaseService<User> implements Constants {
 		user.setLock_time(userOnDb.getLock_time());
 		user.setPasswordChangedTime(userOnDb.getPasswordChangedTime());
 		user.setStatus(true);
-		user.setUpdated_date(ngay);
+		user.setUpdated_date(date);
 		user.setCreated_by(userOnDb.getCreated_by());
 		user.setPassword(userOnDb.getPassword());
 		// user.setFull_name(userOnDb.getFull_name());
@@ -327,19 +291,16 @@ public class UserService extends BaseService<User> implements Constants {
 			user.setAvatar(userOnDb.getAvatar());
 		}
 
-		// luu vao db
-
 		return super.saveOrUpdate(user);
 	}
 
 	// edit admin
 	@Transactional
 	public User edit2(User user, MultipartFile userAvatar) throws Exception {
-		// lay thong tin trong db
 		User userOnDb = super.getById(user.getId());
 
 		Calendar cal = Calendar.getInstance();
-		Date ngay = cal.getTime();
+		Date date = cal.getTime();
 		if (!StringUtils.isEmpty(user.getPassword())) {
 			if (user.getPassword().equals(userOnDb.getPassword())) {
 				user.setPassword(userOnDb.getPassword());
@@ -353,9 +314,9 @@ public class UserService extends BaseService<User> implements Constants {
 		}
 
 		user.setCreated_date(userOnDb.getCreated_date());
-		user.setUpdated_date(ngay);
+		user.setUpdated_date(date);
 		user.setProvider(userOnDb.getProvider());
-		user.setUpdated_date(ngay);
+		user.setUpdated_date(date);
 		user.setCreated_by(userOnDb.getCreated_by());
 		user.setFail_attemp(userOnDb.getFail_attemp());
 		user.setLock_time(userOnDb.getLock_time());
@@ -451,8 +412,8 @@ public class UserService extends BaseService<User> implements Constants {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(4);
 		String encodedPassword = passwordEncoder.encode(newPassword);
 		Calendar cal = Calendar.getInstance();
-		Date ngay = cal.getTime();
-		user.setPasswordChangedTime(ngay);
+		Date date = cal.getTime();
+		user.setPasswordChangedTime(date);
 		user.setPassword(encodedPassword);
 		user.setReset_password_token(null);
 		super.saveOrUpdate(user);
@@ -469,9 +430,6 @@ public class UserService extends BaseService<User> implements Constants {
 	}
 
 	public static void main(String[] args) {
-		String a = "abc";
-		String b = "abc";
-		a.concat(b);
-		System.out.println(a);
+
 	}
 }

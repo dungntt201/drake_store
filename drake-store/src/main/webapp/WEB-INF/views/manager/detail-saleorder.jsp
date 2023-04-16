@@ -88,8 +88,8 @@ table tr td img {
 			<div class="container-fluid"
 				style="margin: 50px auto; border: 2px solid black; width: 70%; border-radius: 10px">
 
-				<h1 class="text-center">Dream Sneakers</h1>
-				<h5 class="text-center">Địa chỉ : Liên Hiệp - Phúc Thọ - Hà Nội</h5>
+				<h1 class="text-center">Drake Store</h1>
+				<h5 class="text-center">Địa chỉ : Tân Lập - Đan Phượng - Hà Nội</h5>
 				<!-- <h4>Địa chỉ : Liên Hiệp - Phúc Thọ - Hà Nội</h4> -->
 				<h3 class=" text-center">Hóa Đơn Bán Lẻ</h3>
 				<p class="text-left">

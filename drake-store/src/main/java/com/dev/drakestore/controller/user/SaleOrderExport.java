@@ -76,11 +76,11 @@ public class SaleOrderExport {
 
 //		SaleOrder saleOrder1 = saleOrder;
 
-		Paragraph p = new Paragraph("Dream Sneakers", font);
+		Paragraph p = new Paragraph("Drake Store", font);
 		p.setAlignment(Paragraph.ALIGN_CENTER);
 
 		document.add(p);
-		Paragraph p1 = new Paragraph("Địa chỉ : Liên Hiệp - Phúc Thọ - Hà Nội", font);
+		Paragraph p1 = new Paragraph("Địa chỉ : Tân Lập - Đan Phượng - Hà Nội", font);
 		p1.setAlignment(Paragraph.ALIGN_CENTER);
 
 		document.add(p1);

@@ -61,31 +61,18 @@ public class SecureConf {
 
 			http.authorizeRequests()
 					// cho phép các request static không bị ràng buộc .antMatchers("/")
-					.antMatchers("/user/**", "/manager/**", "/upload/**")
-
-					.permitAll()
-
-					// các request kiểu: "/admin/" phải đăng nhập vaf phair xasc thuwjc vs role
-					// laf ADMIN
-
-					.antMatchers("/admin/account/**").hasAuthority("SUPER_ADMIN").antMatchers("/admin/**")
-					.hasAnyAuthority("ADMIN", "SUPER_ADMIN").antMatchers("/account/info").authenticated()
-
+					.antMatchers("/user/**", "/manager/**", "/upload/**").permitAll()
+					.antMatchers("/admin/account/**").hasAuthority("SUPER_ADMIN")
+					.antMatchers("/admin/**").hasAnyAuthority("ADMIN", "SUPER_ADMIN")
+					.antMatchers("/account/info").authenticated()
 					.antMatchers("/account/login**").permitAll()
-
 					.anyRequest().permitAll().and()
-
-					// cấu hình trang đăng nhập
 					.formLogin().loginPage("/account/login")
-
 					.loginProcessingUrl("/account/perform-login")
-
 					.failureHandler(loginFailureHandler)
-
 					// .successHandler(loginSuccessHandler)
 					// .failureUrl("/account/login?login_error=true")
 					.defaultSuccessUrl("/account/info", true)
-
 					.permitAll().and()
 					// config for oauth2
 					.oauth2Login().loginPage("/account/login").userInfoEndpoint().userService(oauth2UserService).and()

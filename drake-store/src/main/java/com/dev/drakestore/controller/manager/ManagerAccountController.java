@@ -51,10 +51,6 @@ public class ManagerAccountController extends BaseController {
 	@RequestMapping(value = { "/admin/account/list-accounts" }, method = RequestMethod.GET) // -> action
 	public String contact(final Model model, final HttpServletRequest request, final HttpServletResponse response,
 			@ModelAttribute("productSearch") ProductSearch ps) throws IOException {
-		// http://localhost:9996/manager/products?keyword=java&page=1 search va phan
-		// trang cho search
-		// http://localhost:9996/manager/products?page=1 phan trang cho tat ca
-		// page Paramater
 
 		int sizeOfPage = 5;
 		// set page cho product search
@@ -535,20 +531,17 @@ public class ManagerAccountController extends BaseController {
 			final HttpServletResponse response, @RequestBody User user) {
 
 		Calendar cal = Calendar.getInstance();
-		Date ngay = cal.getTime();
+		Date date = cal.getTime();
 		User User = userService.getById(user.getId());
 
 		if (User != null) {
-			// Category.setUpdated_by(Category.getUpdated_by());
 			User.setStatus(false);
-
-			User.setUpdated_date(ngay);
+			User.setUpdated_date(date);
 			User.setUpdated_by(getUserLogined().getId());
 
 			userService.saveOrUpdate(User);
 		}
-		// System.out.println(request.getParameter("min-price"));
-		// trả kết quả
+
 		Map<String, Object> jsonResult = new HashMap<String, Object>();
 		jsonResult.put("code", 200);
 		jsonResult.put("status", "TC");
@@ -571,7 +564,6 @@ public class ManagerAccountController extends BaseController {
 			Map<String, Object> jsonResult = new HashMap<String, Object>();
 			jsonResult.put("code", 200);
 			jsonResult.put("status", "TC");
-			// jsonResult.put("accountName", getUserLogined().getUsername());
 			jsonResult.put("msg", "Xóa không thành công. Không được phép xóa tài khoản đang đăng nhập");
 			return ResponseEntity.ok(jsonResult);
 		} else {
@@ -590,12 +582,12 @@ public class ManagerAccountController extends BaseController {
 
 				// update comments
 
-				List<Blog> blogs = blogService.findAll();
-				for (Blog b : blogs) {
-					List<Comment> comments = commentService.findByBlogId(b.getId());
-					b.setComments(comments.size());
-					blogService.saveOrUpdate(b);
-				}
+//				List<Blog> blogs = blogService.findAll();
+//				for (Blog b : blogs) {
+//					List<Comment> comments = commentService.findByBlogId(b.getId());
+//					b.setComments(comments.size());
+//					blogService.saveOrUpdate(b);
+//				}
 				// System.out.println(User.getRoles().size());
 				// trả kết quả
 				Map<String, Object> jsonResult = new HashMap<String, Object>();

@@ -61,12 +61,10 @@ public abstract class BaseService<E extends BaseEntity> {
 	@Transactional
 	public E saveOrUpdate(E entity) {
 		if (entity.getId() == null || entity.getId() <= 0) {
-			// System.out.println("null");
 			entityManager.persist(entity);
 			entityManager.flush();
 			return entity;
 		} else {
-			// System.out.println("not null");
 			E entity1 = entityManager.merge(entity);
 			entityManager.flush();
 			return entity1;

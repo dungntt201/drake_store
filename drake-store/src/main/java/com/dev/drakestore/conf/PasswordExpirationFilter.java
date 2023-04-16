@@ -31,7 +31,6 @@ public class PasswordExpirationFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		// TODO Auto-generated method stub
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 
 		if (isUrlExcluded(httpRequest)) {
@@ -39,8 +38,6 @@ public class PasswordExpirationFilter implements Filter {
 			chain.doFilter(request, response);
 			return;
 		}
-
-//		log.info("PasswordExpirationFilter");
 
 		User user = getLoggedInCustomer();
 
@@ -84,9 +81,7 @@ public class PasswordExpirationFilter implements Filter {
 
 	private void showChangePasswordPage(ServletResponse response, HttpServletRequest httpRequest, User user)
 			throws IOException {
-		System.out.println("Customer: " + user.getFull_name() + " - Password Expired:");
-		System.out.println("Last time password changed: " + user.getPasswordChangedTime());
-		System.out.println("Current time: " + new Date());
+		log.info("Customer: " + user.getFull_name() + " - Password Expired: [Last time password changed: " + user.getPasswordChangedTime() + "]");
 
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
 		String redirectURL = httpRequest.getContextPath() + "/change_password";
