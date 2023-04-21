@@ -51,7 +51,13 @@ public class SaleOrder extends BaseEntity {
 	
 	@Column(name="confirm")
 	private boolean confirm;
-	
+
+	@Column(name = "is_pay")
+	private boolean is_pay;
+
+	@Column(name = "ipn_return")
+	private String ipn_return;
+
 	@Column(name="message",length =2000)
 	private String message;
 	@OneToMany(cascade = CascadeType.ALL,
@@ -146,8 +152,23 @@ public class SaleOrder extends BaseEntity {
 	public void setCancel(boolean cancel) {
 		this.cancel = cancel;
 	}
-	
-	
+
+	public boolean isIs_pay() {
+		return is_pay;
+	}
+
+	public void setIs_pay(boolean is_pay) {
+		this.is_pay = is_pay;
+	}
+
+	public String getIpn_return() {
+		return ipn_return;
+	}
+
+	public void setIpn_return(String ipn_return) {
+		this.ipn_return = ipn_return;
+	}
+
 	public String getMessage() {
 		return message;
 	}

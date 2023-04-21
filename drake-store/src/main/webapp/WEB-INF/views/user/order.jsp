@@ -92,10 +92,13 @@
 										disabled="disabled" value="${userLogined.email }"> <br>
 									<textarea style="width: 100%; height: 100px" name="message"
 										class="form-control" placeholder="Mesage"></textarea>
-									<br> <input type="radio" name="ship" value="1"
-										checked="checked">Giao hàng tận nơi (Free)<br> <br>
-									<input type="radio" checked="checked" name="ship-code"
-										value="1">Thanh toán khi nhận hàng (COD)<br> <br>
+									<br>
+									<<input type="radio" name="ship" value="1" checked="checked" id="ship">
+									<label for="ship"> Giao hàng tận nơi (Free)</label> <br> <br>
+									<input type="radio" name="ship-code" checked="checked" value="cod" id="ship_code">
+									<label for="ship_code"> Thanh toán khi nhận hàng (COD)</label> <br>
+									<input type="radio" name="ship-code" value="atm" id="ship_atm">
+									<label for="ship_atm"> Thanh toán trực tuyến</label> <br> <br>
 									<small
 										style="background-color: red; color: white; padding: 5px">We
 										will never share your email with anyone else</small><br> <br>
@@ -130,10 +133,13 @@
 
 									<textarea style="width: 100%; height: 100px" name="message"
 										class="form-control" placeholder="Message"></textarea>
-									<br> <input type="radio" name="ship" value="1"
-										checked="checked">Giao hàng tận nơi (Free) <br> <br>
-									<input type="radio" checked="checked" name="ship-code"
-										value="1">Thanh toán khi nhận hàng (COD) <br> <br>
+									<br>
+									<input type="radio" name="ship" value="1" checked="checked" id="ship">
+									<label for="ship"> Giao hàng tận nơi (Free)</label> <br> <br>
+									<input type="radio" name="ship-code" checked="checked" value="cod" id="ship_code">
+									<label for="ship_code"> Thanh toán khi nhận hàng (COD)</label> <br>
+									<input type="radio" name="ship-code" value="atm" id="ship_atm">
+									<label for="ship_atm"> Thanh toán trực tuyến</label> <br> <br>
 									<small
 										style="background-color: red; color: white; padding: 5px">We
 										will never share your email with anyone else</small><br> <br>
@@ -391,6 +397,15 @@
 				}
 			});
 		}
+
+		let rspCode = "${rspCode}"
+		if(rspCode !== "") {
+			console.log(1)
+		}
+		else {
+			console.log(2)
+		}
+		console.log("rspCode: " + rspCode)
 	</script>
 </body>
 </html>

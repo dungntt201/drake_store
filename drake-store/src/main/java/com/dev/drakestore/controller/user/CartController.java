@@ -1,23 +1,23 @@
 package com.dev.drakestore.controller.user;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.net.InetAddress;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.dev.drakestore.conf.PaymentConfig;
 import com.dev.drakestore.dto.Cart;
 import com.dev.drakestore.dto.CartItem;
 import com.dev.drakestore.entities.*;
 import com.dev.drakestore.service.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -26,9 +26,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
@@ -36,6 +34,7 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 
 @Controller
+@Slf4j
 public class CartController extends BaseController {
     @Autowired
     SaleOrderService saleOrderService;
@@ -57,6 +56,9 @@ public class CartController extends BaseController {
     private Configuration freemarkerConfig;
 
     @Autowired
+    private PaymentConfig config;
+
+    @Autowired
     private SaleOrderProductService saleOrderProductService;
 
     @RequestMapping(value = {"/order/finish"}, method = RequestMethod.POST)
@@ -65,12 +67,13 @@ public class CartController extends BaseController {
             /* Mail mail */) throws Exception {
         HttpSession session = request.getSession();
         // lấy ngày tạo
-        Calendar cal = Calendar.getInstance();
+        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("Etc/GMT+7"));
         Date date = cal.getTime();
 
         String customerEmail = "";
         String customerName = "";
         String customerAddress = request.getParameter("customerAddress");
+        String payment = request.getParameter("ship-code");
         if (isLogined()) {
             User user = userService.getById(getUserLogined().getId());
             customerEmail = user.getEmail();
@@ -110,7 +113,6 @@ public class CartController extends BaseController {
             saleOrder.setCustomer_email(customerEmail);
         }
 
-        // BigDecimal total;
         // kết các sản phẩm trong giỏ hàng cho hóa đơn
 
         Cart cart = (Cart) session.getAttribute("cart");
@@ -208,17 +210,29 @@ public class CartController extends BaseController {
 
         this.emailSender.send(message);
 
+        // Start: Thanh toán qua CTT vnpay
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        String orderInfo = "Thanh toan don hang thoi gian: ".concat(format.format(date));
+        String paymentUrl = this.createPaymentUrl(saleOrder.getId(), saleOrder.getTotal(), null, orderInfo, "", "vn");
+        log.info("Url: " + paymentUrl);
+        // End: Thanh toán qua CTT vnpay
+
         // sau khi lưu xong thì xáo dữ liệu giỏ hàng
         session.setAttribute("cart", null);
         session.setAttribute("totalItems", null);
         session.setAttribute("totalPrice", getTotalPrice(request));
-        redirectAttributes.addFlashAttribute("msg",
-                "Chúc mừng bạn " + saleOrder.getCustomer_name() + " đã đặt hàng thành công!");
-        return "redirect:/order/view";
+
+        if("atm".equals(payment)) {
+            return "redirect:" + paymentUrl;
+        }
+        else {
+            redirectAttributes.addFlashAttribute("msg", "Chúc mừng bạn " + saleOrder.getCustomer_name() + " đã đặt hàng thành công!");
+            return "redirect:/order/view";
+        }
     }
 
     @RequestMapping(value = {"/order/view"}, method = RequestMethod.GET)
-    public String orderView(final ModelMap model, final HttpServletRequest request, final HttpServletResponse response)
+    public String orderView(final ModelMap model, final HttpServletRequest request, @RequestParam Map<String, String> allParams)
             throws Exception {
         // session tương tự như kiểu Map và được lưu trên main memory.
         HttpSession session = request.getSession();
@@ -237,7 +251,24 @@ public class CartController extends BaseController {
         List<Categories> fullParent = categoriesService.findFullParentCategories();
         List<Categories> fullChildren = categoriesService.findFullChildrenCategories();
         List<Product> products = productService.findAll();
+        // Xứ lý trả về khi thanh toán bằng atm
+        String rspCode = "";
+        if(!allParams.isEmpty()) {
+            rspCode = allParams.get("vnp_ResponseCode");
+            if("00".equals(rspCode)) {
+                String url = request.getRequestURL().toString();
+                String queryString = request.getQueryString();
+                String ipnUrl = url + "/ipn_return?" + queryString;
+                String orderId = allParams.get("vnp_TxnRef");
+                SaleOrder saleOrder = saleOrderService.getById(Integer.parseInt(orderId));
+                saleOrder.setIpn_return(ipnUrl);
+                saleOrderService.saveOrUpdate(saleOrder);
+                model.addAttribute("msg", "Chúc mừng bạn " + saleOrder.getCustomer_name() + " đã đặt hàng thành công!");
+            }
+            // Xử lý thanh toán fail
+        }
 
+        model.addAttribute("rspCode", rspCode);
         model.addAttribute("parentCategories", fullParent);
         model.addAttribute("childrenCategories", fullChildren);
         model.addAttribute("products", products);
@@ -245,14 +276,13 @@ public class CartController extends BaseController {
     }
 
     @RequestMapping(value = {"/cart/view"}, method = RequestMethod.GET)
-    public String cartView(final Model model, final HttpServletRequest request, final HttpServletResponse response)
+    public String cartView(final Model model, final HttpServletRequest request)
             throws Exception {
         List<Categories> fullParent = categoriesService.findFullParentCategories();
         List<Categories> fullChildren = categoriesService.findFullChildrenCategories();
         // session tương tự như kiểu Map và được lưu trên main memory.
         HttpSession session = request.getSession();
         // List<Product> products1 = productService.findAll();
-
         List<Product> products = productService.findAll();
         // Lấy thông tin giỏ hàng.
         Cart cart = null;
@@ -265,7 +295,7 @@ public class CartController extends BaseController {
                 model.addAttribute("msg1", "Bạn không có sản phẩm nào trong giỏ hàng");
             }
         }
-        // System.out.println(products.size());
+
         model.addAttribute("parentCategories", fullParent);
         model.addAttribute("childrenCategories", fullChildren);
         model.addAttribute("products", products);
@@ -631,4 +661,169 @@ public class CartController extends BaseController {
 
         return totalPrice;
     }
+
+    @RequestMapping(value = {"/order/view/ipn_return"}, method = RequestMethod.GET)
+    public @ResponseBody Map<String, String> ipnURL(@RequestParam Map<String, String> allParams) {
+        log.info("allParams - handleIpnUrl: " + allParams);
+
+        String vnp_SecureHash = allParams.get("vnp_SecureHash");
+        StringBuilder hashValue = new StringBuilder();
+        try {
+            if (allParams.containsKey("vnp_SecureHashType")) {
+                allParams.remove("vnp_SecureHashType");
+            }
+            if (allParams.containsKey("vnp_SecureHash")) {
+                allParams.remove("vnp_SecureHash");
+            }
+
+            List fieldName = new ArrayList(allParams.keySet());
+            Map hashField = new HashMap();
+            String hashFieldName;
+            String hashFieldValue;
+            Iterator itr = fieldName.iterator();
+
+            while (itr.hasNext()) {
+                hashFieldName = (String) itr.next();
+                hashFieldValue = URLEncoder.encode(allParams.get(hashFieldName), StandardCharsets.US_ASCII.toString());
+                log.info("hashValue: " + hashFieldValue);
+                hashField.put(hashFieldName, hashFieldValue);
+            }
+
+            hashValue.append(config.hashAllFields(hashField));
+        } catch (Exception ex) {
+            log.error("Exception " + ex.getMessage(), ex);
+        }
+
+        Map<String, String> output = new HashMap<>();
+        String message = "";
+        String rspCode = "";
+
+        try {
+            if (hashValue.equals(vnp_SecureHash)) {
+                String orderId = allParams.get("vnp_TxnRef");
+                SaleOrder saleOrder = saleOrderService.getById(Integer.parseInt(orderId));
+
+                if (saleOrder != null) {
+                    Double amountPay = saleOrder.getTotal().doubleValue();
+                    double vnp_Amount = Double.parseDouble(allParams.get("vnp_Amount")) / 100;
+                    if ((amountPay != null) ? (amountPay == vnp_Amount ? true : false) : false) {
+                        if (saleOrder.isStatus()) {
+                            saleOrder.setIs_pay("00".equals(allParams.get("vnp_ResponseCode")));
+                            try {
+                                saleOrderService.saveOrUpdate(saleOrder);
+                            } catch (Exception e) {
+                                log.error("Update ex - handleIpnUrl: ", e);
+                            }
+                            message = "Confirm Success";
+                            rspCode = "00";
+
+                        } else {
+                            message = "Order already confirmed";
+                            rspCode = "02";
+                        }
+                    } else {
+                        message = "Invalid Amount";
+                        rspCode = "04";
+                    }
+                } else {
+                    message = "Order not Found";
+                    rspCode = "01";
+                }
+            } else {
+                message = "Invalid Checksum";
+                rspCode = "97";
+            }
+        } catch (Exception e) {
+            log.error("Other error - handleIpnUrl: ", e);
+        }
+
+        output.put("message: ", message);
+        output.put("rspCode: ", rspCode);
+
+        return output;
+    }
+
+    private String createPaymentUrl(Integer orderId, BigDecimal amount, String orderType, String orderInfo, String bankCode, String locate) {
+        log.info("Params saveOrder: orderId - " + orderId + ", amount - " + amount + ", orderType - " + orderInfo + ", bankCode - " + bankCode + ", locate - " + locate);
+
+        String paymentUrl = "";
+        try {
+            InetAddress myIP = InetAddress.getLocalHost();
+
+            String vnp_Version = "2.1.0";
+            String vnp_Command = "pay";
+            String vnp_TxnRef = orderId.toString();
+            String vnp_IpAddr = myIP.getHostAddress();
+            String vnp_TmnCode = config.getVnp_TmnCode();
+            int vnp_amount = amount.intValue();
+
+            Map<String, String> vnp_Params = new HashMap<>();
+            vnp_Params.put("vnp_Version", vnp_Version);
+            vnp_Params.put("vnp_Command", vnp_Command);
+            vnp_Params.put("vnp_TmnCode", vnp_TmnCode);
+            vnp_Params.put("vnp_Amount", String.valueOf(vnp_amount));
+            vnp_Params.put("vnp_CurrCode", "VND");
+
+            if (bankCode != null && !bankCode.isEmpty()) {
+                vnp_Params.put("vnp_BankCode", bankCode);
+            }
+            vnp_Params.put("vnp_TxnRef", vnp_TxnRef);
+            vnp_Params.put("vnp_OrderInfo", orderInfo);
+            vnp_Params.put("vnp_OrderType", orderType);
+
+            if (locate != null && !locate.isEmpty()) {
+                vnp_Params.put("vnp_Locale", locate);
+            } else {
+                vnp_Params.put("vnp_Locale", "vn");
+            }
+            vnp_Params.put("vnp_ReturnUrl", config.getVnp_ReturnUrl());
+            vnp_Params.put("vnp_IpAddr", vnp_IpAddr);
+
+            Date dt = new Date();
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+            String vnp_CreateDate = formatter.format(dt);
+            vnp_Params.put("vnp_CreateDate", vnp_CreateDate);
+
+            Calendar cldvnp_ExpireDate = Calendar.getInstance();
+            cldvnp_ExpireDate.add(Calendar.SECOND, 300);
+            Date vnp_ExpireDateD = cldvnp_ExpireDate.getTime();
+            String vnp_ExpireDate = formatter.format(vnp_ExpireDateD);
+
+            vnp_Params.put("vnp_ExpireDate", vnp_ExpireDate);
+
+            List fieldNames = new ArrayList(vnp_Params.keySet());
+            Collections.sort(fieldNames);
+            StringBuilder hashData = new StringBuilder();
+            StringBuilder query = new StringBuilder();
+            Iterator itr = fieldNames.iterator();
+            while (itr.hasNext()) {
+                String fieldName = (String) itr.next();
+                String fieldValue = (String) vnp_Params.get(fieldName);
+                if ((fieldValue != null) && (fieldValue.length() > 0)) {
+                    //Build hash data
+                    hashData.append(fieldName);
+                    hashData.append('=');
+                    //hashData.append(fieldValue); //sử dụng và 2.0.0 và 2.0.1 checksum sha256
+                    hashData.append(URLEncoder.encode(fieldValue, StandardCharsets.US_ASCII.toString())); //sử dụng v2.1.0  check sum sha512
+                    //Build query
+                    query.append(URLEncoder.encode(fieldName, StandardCharsets.US_ASCII.toString()));
+                    query.append('=');
+                    query.append(URLEncoder.encode(fieldValue, StandardCharsets.US_ASCII.toString()));
+                    if (itr.hasNext()) {
+                        query.append('&');
+                        hashData.append('&');
+                    }
+                }
+            }
+            String queryUrl = query.toString();
+            String vnp_SecureHash = config.hmacSHA512(config.getVnp_HashSecret(), hashData.toString());
+            queryUrl += "&vnp_SecureHash=" + vnp_SecureHash;
+            paymentUrl = config.getVnp_PayUrl() + "?" + queryUrl;
+        } catch (Exception e) {
+            log.error("Save Order ex: ", e);
+        }
+
+        return paymentUrl;
+    }
+
 }
