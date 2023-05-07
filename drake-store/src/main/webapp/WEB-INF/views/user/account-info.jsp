@@ -165,7 +165,7 @@
 											</c:otherwise>
 										</c:choose>
 										<c:choose>
-											<c:when test="${saleOrder.confirm }">
+											<c:when test="${saleOrder.confirm || saleOrder.ipn_return != null}">
 												<td style="color: red; font-weight: bolder">Không thể
 													hủy</td>
 											</c:when>
