@@ -32,6 +32,7 @@
 <!-- Auto detecting language -->
 <link rel="stylesheet" href="${base }/user/css/login.css">
 <link rel="stylesheet" href="${base}/user/css/call_button.css">
+<link rel="stylesheet" href="${base}/user/css/header-f.css">
 <script type="text/javascript"
 	src="https://sites.google.com/site/iristipsblogger/file/hoamai-hoadao.js"></script>
 </head>
@@ -71,8 +72,8 @@
 			<div id="hideDiv5" class="alert alert-danger" role="alert"
 				style="text-align: center; width: 87%; margin: 0 auto">${error}</div>
 		</c:if>
-		
-		
+
+
 		<br>
 		<div class="login1">
 			<div class="login11">
@@ -185,7 +186,7 @@
 		<i class="fas fa-angle-double-up"></i>
 	</button>
 	<script src="${base }/user/js/login.js">
-		
+
 	</script>
 	<script type="text/javascript">
 		$(function() {

@@ -31,6 +31,7 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 <link rel="stylesheet" href="${base }/user/css/order.css">
 <link rel="stylesheet" href="${base}/user/css/call_button.css">
+	<link rel="stylesheet" href="${base}/user/css/header-f.css">
 <script type="text/javascript"
 	src="https://sites.google.com/site/iristipsblogger/file/hoamai-hoadao.js"></script>
 </head>
@@ -47,6 +48,10 @@
 		<c:if test="${not empty msg }">
 			<p id="hideDiv" style="font-weight: normal"
 				class="alert alert-success">${msg }</p>
+		</c:if>
+		<c:if test="${not empty msgErr }">
+			<p id="hideDiv" style="font-weight: normal"
+			   class="alert alert-danger">${msgErr }</p>
 		</c:if>
 		<c:choose>
 			<c:when test="${not empty msg1 }">
@@ -93,7 +98,7 @@
 									<textarea style="width: 100%; height: 100px" name="message"
 										class="form-control" placeholder="Mesage"></textarea>
 									<br>
-									<<input type="radio" name="ship" value="1" checked="checked" id="ship">
+									<input type="radio" name="ship" value="1" checked="checked" id="ship">
 									<label for="ship"> Giao hàng tận nơi (Free)</label> <br> <br>
 									<input type="radio" name="ship-code" checked="checked" value="cod" id="ship_code">
 									<label for="ship_code"> Thanh toán khi nhận hàng (COD)</label> <br>
@@ -165,7 +170,7 @@
 								<div class="sp-order1">
 									<p style="font-weight: bolder">${cartItem.productName }</p>
 									<div>
-										<p style="float: left; color: gray">${cartItem.size }x
+										<p style="float: left; color: gray">${cartItem.size } x
 											${cartItem.quanlity }</p>
 										<p style="float: right; color: gray">
 											<fmt:formatNumber
@@ -211,7 +216,7 @@
 		$(function() {
 			setTimeout(function() {
 				$("#hideDiv").slideUp(500);
-			}, 2000)
+			}, 20000)
 
 		})
 		function checkAddress() {

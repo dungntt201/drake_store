@@ -41,6 +41,7 @@
 
 <link rel="stylesheet" href="${base }/user/css/about-us.css">
 <link rel="stylesheet" href="${base}/user/css/call_button.css">
+	<link rel="stylesheet" href="${base}/user/css/header-f.css">
 <script type="text/javascript"
 	src="https://sites.google.com/site/iristipsblogger/file/hoamai-hoadao.js"></script>
 

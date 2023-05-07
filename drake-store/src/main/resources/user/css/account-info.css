@@ -47,7 +47,6 @@ body {
 
 .main-menu ul.menu {
     display: flex;
-    justify-content: end;
     height: 100%;
     margin-left: 100px;
 }

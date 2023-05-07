@@ -211,10 +211,13 @@ public class CartController extends BaseController {
         this.emailSender.send(message);
 
         // Start: Thanh toán qua CTT vnpay
-        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-        String orderInfo = "Thanh toan don hang thoi gian: ".concat(format.format(date));
-        String paymentUrl = this.createPaymentUrl(saleOrder.getId(), saleOrder.getTotal(), null, orderInfo, "", "vn");
-        log.info("Url: " + paymentUrl);
+        String paymentUrl = "";
+        if("atm".equals(payment)) {
+            SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+            String orderInfo = "Thanh toan don hang thoi gian: ".concat(format.format(date));
+            paymentUrl = this.createPaymentUrl(saleOrder.getId(), saleOrder.getTotal(), null, orderInfo, "", "vn");
+            log.info("paymentUrl: " + paymentUrl);
+        }
         // End: Thanh toán qua CTT vnpay
 
         // sau khi lưu xong thì xáo dữ liệu giỏ hàng
@@ -264,6 +267,9 @@ public class CartController extends BaseController {
                 saleOrder.setIpn_return(ipnUrl);
                 saleOrderService.saveOrUpdate(saleOrder);
                 model.addAttribute("msg", "Chúc mừng bạn " + saleOrder.getCustomer_name() + " đã đặt hàng thành công!");
+            }
+            else {
+                model.addAttribute("msgErr", "Thanh toán không thành công do: Khách hàng hủy giao dịch.");
             }
             // Xử lý thanh toán fail
         }
@@ -662,12 +668,13 @@ public class CartController extends BaseController {
         return totalPrice;
     }
 
+    //API cập nhật trạng thái thanh toán
     @RequestMapping(value = {"/order/view/ipn_return"}, method = RequestMethod.GET)
     public @ResponseBody Map<String, String> ipnURL(@RequestParam Map<String, String> allParams) {
         log.info("allParams - handleIpnUrl: " + allParams);
 
         String vnp_SecureHash = allParams.get("vnp_SecureHash");
-        StringBuilder hashValue = new StringBuilder();
+        String hashValue = "";
         try {
             if (allParams.containsKey("vnp_SecureHashType")) {
                 allParams.remove("vnp_SecureHashType");
@@ -689,7 +696,8 @@ public class CartController extends BaseController {
                 hashField.put(hashFieldName, hashFieldValue);
             }
 
-            hashValue.append(config.hashAllFields(hashField));
+            hashValue = config.hashAllFields(hashField);
+            log.info("hash Value: " + hashValue);
         } catch (Exception ex) {
             log.error("Exception " + ex.getMessage(), ex);
         }
@@ -705,7 +713,7 @@ public class CartController extends BaseController {
 
                 if (saleOrder != null) {
                     Double amountPay = saleOrder.getTotal().doubleValue();
-                    double vnp_Amount = Double.parseDouble(allParams.get("vnp_Amount")) / 100;
+                    double vnp_Amount = Double.parseDouble(allParams.get("vnp_Amount"));
                     if ((amountPay != null) ? (amountPay == vnp_Amount ? true : false) : false) {
                         if (saleOrder.isStatus()) {
                             saleOrder.setIs_pay("00".equals(allParams.get("vnp_ResponseCode")));

@@ -32,8 +32,9 @@
 <!-- Auto detecting language -->
 <link rel="stylesheet" href="${base }/user/css/forgot_password.css">
 <link rel="stylesheet" href="${base}/user/css/call_button.css">
+	<link rel="stylesheet" href="${base}/user/css/header-f.css">
 <script type="text/javascript"
-	src="https://sites.google.com/site/iristipsblogger/file/hoamai-hoadao.js"></script>
+src="https://sites.google.com/site/iristipsblogger/file/hoamai-hoadao.js"></script>
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/user/layout/header.jsp"></jsp:include>

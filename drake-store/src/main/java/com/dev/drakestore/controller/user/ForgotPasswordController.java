@@ -68,7 +68,7 @@ public class ForgotPasswordController extends BaseController {
 				String resetPasswordLink = Utility.getSiteURL(request) + "/reset_password?token=" + token;
 				sendEmail(email, resetPasswordLink);
 				model.addAttribute("message",
-						"Chúng tôi vừa gửi cho bạn 1 link đến email của bạn để đổi mật khẩu.Vui lòng check email đó.");
+						"Chúng tôi vừa gửi cho bạn 1 link đến email của bạn để đổi mật khẩu.Vui lòng kiểm tra email của bạn.");
 
 			} catch (UserNotFoundException ex) {
 				model.addAttribute("error", ex.getMessage());
@@ -94,7 +94,7 @@ public class ForgotPasswordController extends BaseController {
 		MimeMessage message = mailSender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(message);
 
-		helper.setFrom("tinhtrang0527@gmail.com", "DreamSneakers Support");
+		helper.setFrom("yeukohon235@gmail.com", "Drake Store");
 		helper.setTo(recipientEmail);
 
 		String subject = "Here's the link to reset your password";

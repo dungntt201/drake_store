@@ -259,7 +259,7 @@ button {
 						<th>Người mua</th>
 						<th>Địa chỉ</th>
 						<th>Giá trị đơn hàng</th>
-						<!-- <th>Thanh toán</th> -->
+						<th>Thanh toán</th>
 						<th>Trạng thái</th>
 						<th>Xem chi tiết</th>
 						<c:if test="${filter!='deleted' }">
@@ -281,14 +281,14 @@ button {
 							<td>${saleOrder.customer_address}</td>
 							<td><fmt:formatNumber value="${saleOrder.total}"
 									type="number" groupingUsed="true" /> VND</td>
-							<%-- <c:choose>
-			               				<c:when test="${saleOrder.confirm&&saleOrder.is_delivery }">
+							<c:choose>
+			               				<c:when test="${saleOrder.confirm&&saleOrder.is_delivery || saleOrder.is_pay}">
 			               					<td>Đã thanh toán</td>
 			               				</c:when>
 			               				<c:otherwise>
 			               					<td>Chưa thanh toán</td>
 			               				</c:otherwise>
-			               			</c:choose> --%>
+			               			</c:choose>
 							<c:choose>
 								<c:when test="${saleOrder.cancel&&saleOrder.status }">
 									<td>Đã hủy</td>
@@ -314,7 +314,7 @@ button {
 									class="far fa-eye"></i></a><br></td>
 							<c:if test="${filter!='deleted' }">
 								<c:choose>
-									<c:when test="${saleOrder.confirm }">
+									<c:when test="${saleOrder.confirm || saleOrder.is_pay || saleOrder.ipn_return != null}">
 										<td><p
 												style="text-decoration: none; color: red; font-weight: bolder">Không
 												thể hủy</p></td>
@@ -332,8 +332,9 @@ button {
 									</c:otherwise>
 								</c:choose>
 							</c:if>
-							<td><a
-								href="${base }/admin/edit-saleorder/${saleOrder.code}"
+							<td><a onclick="updatePayStatus('${saleOrder.ipn_return}', ${saleOrder.is_pay}) "
+<%--								href="${base }/admin/edit-saleorder/${saleOrder.code}"--%>
+								   href="javascript:setTimeout(()=>{window.location = '${base }/admin/edit-saleorder/${saleOrder.code}' },1000);"
 								style="text-decoration: none; color: blue; font-weight: bolder"><i
 									class="fas fa-edit"></i></a> <%--	                    				
 									<c:if test="${filter!='deleted' }">--%> <%--<p class="confirmation1" style="text-decoration:none;color:red;font-weight: bolder;cursor: pointer;"><i class="fas fa-eye-slash"></i></p>--%>
@@ -415,6 +416,26 @@ button {
 		function function1() {
 			return confirm('Bạn có chắc chắn muốn hủy đơn hàng này?');
 		}
+
+		function updatePayStatus(ipnReturn, isPay) {
+			if(!isPay) {
+				console.log(1)
+				jQuery.ajax({
+					url : ipnReturn,
+					type : "get",
+					contentType : "application/json",
+					dataType : "json", // kieu du lieu tra ve tu controller la json
+					success : function(jsonResult) {
+						console.log("Thanh cong")
+					},
+					error : function(jqXhr, textStatus, errorMessage) { // error callback
+
+					}
+				});
+			}
+		}
+
+
 		$(document).on(
 				"click",
 				".confirmation",

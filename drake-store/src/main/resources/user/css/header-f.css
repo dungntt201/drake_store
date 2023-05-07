@@ -1,0 +1,99 @@
+.logo img {
+    margin-top: 0;
+    width: 140px;
+}
+
+.main-menu ul.menu {
+    align-items: center;
+}
+
+.main-icon {
+    display: flex;
+    justify-content: end;
+}
+
+.love1 p {
+    left: 60%;
+    top: -30%;
+    position: absolute;
+    width: 32px;
+    font-size: 17px;
+    color: white;
+    background-color: #f20909;
+    border-radius: 50%;
+    padding: 4px 11px;
+    height: 32px;
+    font-weight: 700;
+}
+
+.cart1 p {
+    left: 60%;
+    top: -30%;
+    position: absolute;
+    width: 32px;
+    font-size: 17px;
+    color: white;
+    background-color: #f20909;
+    border-radius: 50%;
+    padding: 4px 11px;
+    height: 32px;
+    font-weight: 700;
+}
+
+.money p {
+    font-size: 20px;
+}
+
+.overlay1 {
+    height: 0;
+    width: 100%;
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.7);
+    overflow-x: hidden;
+    transition: 0.5s;
+}
+
+.overlay1-content form input {
+    font-size: 16px;
+    padding: 0 20px;
+    width: 50%;
+    height: 50px;
+    margin: 0;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    outline: none;
+    border: none;
+}
+
+.overlay1-content form button {
+    width: 5%;
+    height: 50px;
+    margin: -1px 0 0 -5px;
+    border: none;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    transition: all 0.3s;
+    padding-bottom: 2px;
+    background-color: #009edb;
+}
+
+.overlay1-content form button i {
+    font-size: 20px;
+    position: relative;
+    top: 3px;
+    color: #fff;
+}
+
+.overlay1-content form button:hover {
+    transition: all 0.3s;
+}
+.payment .payment1 .payment12 {
+    width: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}

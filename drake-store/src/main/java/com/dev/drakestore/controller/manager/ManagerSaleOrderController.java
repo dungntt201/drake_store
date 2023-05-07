@@ -64,18 +64,12 @@ public class ManagerSaleOrderController extends BaseController {
 			List<SaleOrderProducts> listSaleOrderProducts = saleOrderProductService
 					.findBySaleOrderId(saleorder.getId());
 			if (saleorder != null) {
-
-				saleorder.setCode(onDB.getCode());
-				saleorder.setCreated_date(onDB.getCreated_date());
-				saleorder.setTotal(onDB.getTotal());
-				saleorder.setCreated_by(onDB.getCreated_by());
-				saleorder.setUser(onDB.getUser());
-				saleorder.setUpdated_date(ngay);
-				saleorder.setUpdated_by(getUserLogined().getId());
-				saleorder.setCancel(true);
-				saleorder.setConfirm(false);
-				saleorder.setIs_delivery(false);
-				saleOrderService.saveOrUpdate(saleorder);
+				onDB.setUpdated_date(ngay);
+				onDB.setUpdated_by(getUserLogined().getId());
+				onDB.setCancel(true);
+				onDB.setConfirm(false);
+				onDB.setIs_delivery(false);
+				saleOrderService.saveOrUpdate(onDB);
 			}
 			for (SaleOrderProducts s : listSaleOrderProducts) {
 				System.out.println(s.getProducts1().getId() + s.getSize());
@@ -91,15 +85,12 @@ public class ManagerSaleOrderController extends BaseController {
 		} else {
 			Calendar cal = Calendar.getInstance();
 			Date ngay = cal.getTime();
-			saleorder.setCode(onDB.getCode());
-			saleorder.setCreated_date(onDB.getCreated_date());
-			saleorder.setTotal(onDB.getTotal());
-			saleorder.setCreated_by(onDB.getCreated_by());
-			saleorder.setUser(onDB.getUser());
-			saleorder.setUpdated_date(ngay);
-			saleorder.setUpdated_by(getUserLogined().getId());
-			System.out.println(saleorder.isCancel() + "," + saleorder.isConfirm());
-			saleOrderService.saveOrUpdate(saleorder);
+			onDB.setUpdated_date(ngay);
+			onDB.setUpdated_by(getUserLogined().getId());
+			onDB.setConfirm(saleorder.isConfirm());
+			onDB.setIs_delivery(saleorder.isIs_delivery());
+			onDB.setCancel(saleorder.isCancel());
+			saleOrderService.saveOrUpdate(onDB);
 			redirectAttributes.addFlashAttribute("msg", "Cập nhật thành công!");
 		}
 
@@ -391,7 +382,7 @@ public class ManagerSaleOrderController extends BaseController {
 			html += "<tr>" + "<td>" + (sizeOfPage * ps.getPage() + index) + "</td>" + "<td id=\"code\">" + s.getCode() + "</td>" + "<td>"
 					+ formatter.format(s.getCreated_date()) + "</td>" + "<td>" + s.getCustomer_name() + "</td>" + "<td>"
 					+ s.getCustomer_address() + "</td>" + "<td>" + decimalFormat.format(s.getTotal()) + " VND</td>";
-			if (s.isConfirm() && s.isIs_delivery()) {
+			if (s.isConfirm() && s.isIs_delivery() || s.isIs_pay()) {
 				html += "<td>Đã thanh toán</td>";
 
 			} else {
@@ -413,7 +404,7 @@ public class ManagerSaleOrderController extends BaseController {
 					+ "\" style=\"text-decoration:none;color:blue\"><i class=\"far fa-eye\"></i></a><br></td>";
 
 			if (!ps.getFilter().equals("deleted")) {
-				if (s.isConfirm()) {
+				if (s.isConfirm() || s.isIs_pay() || s.getIpn_return() != null) {
 					html += "<td><p style=\"text-decoration:none;color:red;font-weight: bolder\">Không thể hủy</p></td>";
 				} else if (s.isCancel()) {
 					html += "<td><p style=\"text-decoration:none;color:red;font-weight: bolder\">Không thể hủy</p></td>";

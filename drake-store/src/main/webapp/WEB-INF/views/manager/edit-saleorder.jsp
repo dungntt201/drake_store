@@ -161,7 +161,7 @@
 								<p class="alert alert-danger">Tình trạng : Đã hủy</p>
 							</c:when>
 							<c:when test="${!saleorder.confirm&&!saleorder.cancel}">
-								<p class="alert alert-danger">Tình trạng : Chờ xác nhận</p>
+								<p class="alert alert-danger">Tình trạng : ${saleorder.is_pay ? 'Đã thanh toán và ' : ''}  Chờ xác nhận</p>
 							</c:when>
 							<c:when test="${saleorder.confirm&&!saleorder.is_delivery}">
 								<p class="alert alert-danger">Tình trạng : Đang giao hàng</p>
@@ -232,7 +232,10 @@
 		crossorigin="anonymous"></script>
 	<script src="${base }/manager/js/scripts.js"></script>
 	<script type="text/javascript">
-		
+		if('${saleorder.ipn_return}' !== '') {
+			document.getElementById("cancel").disabled = true;
+		}
+
 	</script>
 </body>
 </html>
